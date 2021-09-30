@@ -68,7 +68,7 @@ namespace MovieEngine.Api
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-
+                
                 services.Configure<FormOptions>(o =>
                 {
                     o.ValueLengthLimit = int.MaxValue;

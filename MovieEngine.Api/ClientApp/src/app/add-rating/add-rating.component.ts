@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MoviesAndTvShows } from '../_services/moviesAndTvShows.service';
 import { RatingService } from '../_services/rating.service';
 import { MovieAndTvShow } from '../_shared/movieAndTvShow.model';
@@ -17,12 +17,36 @@ export class AddRatingComponent implements OnInit {
   ratingList:Rating[]=[];
   movieTvShowList:MovieAndTvShow[]=[];
   forma:FormGroup;
-  constructor(public router:Router,public moviesService:MoviesAndTvShows, public service:RatingService,public fb:FormBuilder) { }
+
+  id : number;
+  title : string = "";
+  constructor(public router:Router,public moviesService:MoviesAndTvShows,
+     public service:RatingService,public fb:FormBuilder,
+     private route : ActivatedRoute) { }
 
   ngOnInit() {
     this.allMoviesAndTvShows("","");
+
+    this.route.params.subscribe(
+      (params : Params) => {
+
+        this.id = +params['id'];
+      
+
+        if(!Number.isNaN(this.id)  &&  this.id != 0 ){
+          this.moviesService.getMovieTvShowById(this.id).subscribe(
+            res =>{
+              this.title = res.title;
+            }
+          );
+        }
+      
+
+      }
+    );
+
     this.forma=this.fb.group({
-      MovieAndTvShowID:["",[Validators.required]],
+      // MovieAndTvShowID:["",[Validators.required]],
       RatingValue:["",[Validators.required]]
     })
   }
@@ -40,7 +64,7 @@ export class AddRatingComponent implements OnInit {
     })
   }
   onSubmit(){
-    let podaci=new RatingInsertRequest(this.forma.get('MovieAndTvShowID').value,+this.forma.get('RatingValue').value);
+    let podaci=new RatingInsertRequest(this.id,+this.forma.get('RatingValue').value);
     this.service.addRating(podaci).subscribe(data=>{
       this.getAllRatings();
     })

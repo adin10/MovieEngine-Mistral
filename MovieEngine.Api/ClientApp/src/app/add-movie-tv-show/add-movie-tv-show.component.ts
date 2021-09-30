@@ -37,7 +37,9 @@ export class AddMovieTvShowComponent implements OnInit {
 
   onSubmit(){
     let podaci=new MovieAndTvShowInsertRequest(this.forma.get('Title').value,
-      this.forma.get('Type').value,this.forma.get('Description').value,this.forma.get('ReleaseDate').value)
+      this.forma.get('Type').value,this.forma.get('Description').value,this.forma.get('ReleaseDate').value,
+      this.response.fileName,this.response.dbPath
+      )
       this.service.addMovieAndTvShow(podaci).subscribe(data=>{
           this.allMoviesAndTvShows("","");
       })

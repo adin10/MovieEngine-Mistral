@@ -17,6 +17,9 @@
         <label>Release date</label>
         <input type="date" class="form-control" formControlName="ReleaseDate">
     </div>
+    <div>
+        <app-upload (onUploadFinished)="uploadFinished($event)" ></app-upload>
+    </div>
     <button style="text-align: center;" class="btn btn-primary" [disabled]="!forma.valid">Add new movie</button>
-<!-- <app-upload (onUploadFinished)="uploadFinished($event)" ></app-upload> -->
+
 </form>

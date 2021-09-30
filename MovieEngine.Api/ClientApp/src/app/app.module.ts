@@ -37,6 +37,7 @@ import { AddRatingComponent } from './add-rating/add-rating.component';
     FormsModule,
     Ng2OrderModule,
     ReactiveFormsModule,
+   
     RouterModule.forRoot([
       { path: '', component: MovieComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -44,7 +45,7 @@ import { AddRatingComponent } from './add-rating/add-rating.component';
       {path:"movie",component:MovieComponent},
       {path:"addMovie",component:AddMovieTvShowComponent},
       {path:"rating",component:RatingComponent},
-      {path:"addRating",component:AddRatingComponent}
+      {path:"addRating/:id",component:AddRatingComponent}
     ])
   ],
   providers: [],

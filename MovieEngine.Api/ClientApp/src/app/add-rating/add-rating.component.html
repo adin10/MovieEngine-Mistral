@@ -1,13 +1,15 @@
-<form [formGroup]="forma" (ngSubmit)="onSubmit()">
+
     <div class="form-group">
         <label>Select movie or tv show</label>
-        <select class="form-control" formControlName="MovieAndTvShowID">
-            <!-- <option>Choose team</option> -->
+        <!-- <select class="form-control" formControlName="MovieAndTvShowID">
+          
             <option *ngFor="let movieTvShow of movieTvShowList" [value]="movieTvShow.movieAndTvShowID">
                 {{movieTvShow.title}}
             </option>
-        </select>
+        </select> -->
+        <input type="text" class="form-control" readonly  [(ngModel)]="title">
     </div>
+<form [formGroup]="forma" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label>Rating</label>
         <input type="text" class="form-control" formControlName="RatingValue">

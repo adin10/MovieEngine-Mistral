@@ -14,6 +14,8 @@ namespace MovieEngine.Database
         public string Type { get; set; }
         public DateTime ReleaseDate { get; set; }
         public byte[] CoverImage { get; set; }
+        public string PictureName { get; set; }
+        public string PicturePath { get; set; }
 
         public ICollection<MovieAndTvShowActor> MovieAndTvShowActor { get; set; }
 

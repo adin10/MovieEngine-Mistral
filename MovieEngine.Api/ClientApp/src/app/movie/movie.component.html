@@ -1,3 +1,12 @@
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" name="options" id="option1" autocomplete="off" checked (click)="getByType('Film')"> Movies
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="option2" autocomplete="off" (click)="getByType('Tv show')"> TV Shows
+    </label>
+    
+  </div>
 <nav class="navbar">
     <span>Filter</span>
     <input class="form-control" type="text" name="Title" [(ngModel)]="Title" (change)="Search()" placeholder="Search by Movie title">
@@ -15,14 +24,16 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let movie of movieTvShowList | paginate : {itemsPerPage:3,currentPage:p}">
+        <tr *ngFor="let movie of movieTvShowList | paginate : {itemsPerPage:n,currentPage:p}">
+            <img mat-card-image [src]="createImgPath(movie.PicturePath)"  class="img-responsive"  width="100%" height="200">
             <td>{{movie.title}}</td>
             <td>{{movie.description}}</td>
             <td>{{movie.releaseDate | date}}</td>
             <td>{{movie.type}}</td>
-            <td routerLink="/addRating">Add rating</td>
+            <td> <button  [routerLink]="['addRating/', movie.movieAndTvShowID]">dd</button> rating</td>
         </tr>
     </tbody>
 </table>
-<pagination-controls (pageChange)="p=$event"></pagination-controls>
+<!-- <pagination-controls (pageChange)="p=$event"></pagination-controls> -->
 <button routerLink="/addMovie">Add new movie or tv show</button>
+<button (click)="showMore()">Show moreee</button>

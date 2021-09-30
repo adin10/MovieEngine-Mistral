@@ -14,6 +14,8 @@ namespace MovieEngine.Infrastructure.Requests
         public string Description { get; set; }
         public string Type { get; set; }
         public DateTime ReleaseDate { get; set; }
+        public string PictureName { get; set; }
+        public string PicturePath { get; set; }
         //public byte[] CoverImage { get; set; }
 
     }

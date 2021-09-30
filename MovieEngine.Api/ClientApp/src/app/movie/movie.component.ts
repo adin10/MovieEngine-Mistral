@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MoviesAndTvShows } from '../_services/moviesAndTvShows.service';
 import { MovieAndTvShow } from '../_shared/movieAndTvShow.model';
 
@@ -13,7 +14,9 @@ export class MovieComponent implements OnInit {
   Title="";
   Type="";
   p:number=1;
-  constructor(public service:MoviesAndTvShows) { }
+
+  n : number = 3;
+  constructor(public service:MoviesAndTvShows,  private router : Router) { }
 
   ngOnInit() {
     this.allMoviesAndTvShows(this.Title,this.Type);
@@ -26,5 +29,23 @@ export class MovieComponent implements OnInit {
   Search(){
     this.allMoviesAndTvShows(this.Title,this.Type);
   }
+
+  showMore(){
+    this.n += this.n;
+
+  }
+
+  getByType(Type : string){
+    this.service.getMoviesAndTvShows("",Type).subscribe(data=>{
+      this.movieTvShowList=data;
+    })
+  }
+  navi(id : number){
+    this.router.navigate(["/addRating/",id]);
+  }
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:5001/api/${serverPath}`;
+  }
+
 
 }

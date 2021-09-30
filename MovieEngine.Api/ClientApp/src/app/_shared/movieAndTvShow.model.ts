@@ -1,6 +1,6 @@
 export class MovieAndTvShow{
     constructor(public movieAndTvShowID:number,public title:string,public description:string,
-                public type:string,public releaseDate:Date
+                public type:string,public releaseDate:Date,public PictureName:string,public PicturePath:string
         ){}
 }
 
