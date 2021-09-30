@@ -1,11 +1,13 @@
+<input class="form-control" type="text" name="Type" [(ngModel)]="RatingValue" (change)="Search()" placeholder="Filter by rating value">
 <table class="table table-dark">
     <thead>
         <tr>
-            <td>Movie name</td>
+            <td>Name</td>
             <td>Type</td>
             <td>Release date</td>
-            <td>Description</td>
+            <!-- <td>Description</td> -->
             <td>Rating</td>
+            <td>Rating date</td>
             
         </tr>
     </thead>
@@ -14,9 +16,9 @@
             <td>{{rating.movieAndTvShow.title}}</td>
             <td>{{rating.movieAndTvShow.type}}</td>
             <td>{{rating.movieAndTvShow.releaseDate | date}}</td>
-            <td>{{rating.movieAndTvShow.description}}</td>
+            <!-- <td>{{rating.movieAndTvShow.description}}</td> -->
             <td (click)="sort()">{{rating.ratingValue}} </td>
+            <td>{{rating.date | date}}</td>
         </tr>
     </tbody>
 </table>
-<button routerLink="/addRating">Add your rating</button>

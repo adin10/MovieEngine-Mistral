@@ -10,5 +10,6 @@ namespace MovieEngine.Infrastructure.Requests
     {
         public int MovieAndTvShowId { get; set; }
         public int RatingValue { get; set; }
+        public DateTime Date { get; set; }
     }
 }

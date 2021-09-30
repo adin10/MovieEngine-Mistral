@@ -44,7 +44,7 @@ export class MovieComponent implements OnInit {
     this.router.navigate(["/addRating/",id]);
   }
   public createImgPath = (serverPath: string) => {
-    return `https://localhost:5001/api/${serverPath}`;
+    return `https://localhost:5001/${serverPath}`;
   }
 
 

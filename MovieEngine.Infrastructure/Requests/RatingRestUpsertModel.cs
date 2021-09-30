@@ -4,15 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieEngine.Database
+namespace MovieEngine.Infrastructure.Requests
 {
-   public class Rating
+   public class RatingRestUpsertModel
     {
-        public int RatingID { get; set; }
         public int MovieAndTvShowId { get; set; }
-        public MovieAndTvShow MovieAndTvShow { get; set; }
         public int RatingValue { get; set; }
-        public DateTime Date { get; set; }
-
     }
 }

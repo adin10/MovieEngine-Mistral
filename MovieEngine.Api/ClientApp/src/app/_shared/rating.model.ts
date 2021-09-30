@@ -2,7 +2,7 @@ import { MovieAndTvShow } from "./movieAndTvShow.model";
 
 export class Rating{
     constructor(public ratingID:number,public movieAndTvShowId:number,
-                public movieAndTvShow:MovieAndTvShow,public ratingValue:number){}
+                public movieAndTvShow:MovieAndTvShow,public ratingValue:number,public date:Date){}
 }
 
 // public int RatingID { get; set; }

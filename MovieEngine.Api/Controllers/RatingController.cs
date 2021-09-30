@@ -29,9 +29,11 @@ namespace MovieEngine.Api.Controllers
             return Ok(await _service.get(search));
         }
         [HttpPost]
-        public async Task<ActionResult<Rating>> Insert(RatingInsertRequest request)
+        public async Task<ActionResult<Rating>> Insert(RatingRestUpsertModel request)
         {
-            return Ok(await _service.Insert(request));
+            var insertRequest = _mapper.Map<RatingInsertRequest>(request);
+            insertRequest.Date = DateTime.Now;
+            return Ok(await _service.Insert(insertRequest));
         }
 
     }

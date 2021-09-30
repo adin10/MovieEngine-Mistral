@@ -15,10 +15,10 @@ export class RatingComponent implements OnInit {
   constructor(public service:RatingService) { }
 
   ngOnInit() {
-    this.getAllRatings();
+    this.getAllRatings(this.Title,this.RatingValue);
   }
 
-  getAllRatings(){
+  getAllRatings(Title:string,ratingValue:number){
     this.service.getRatings(this.Title,this.RatingValue).subscribe(data=>{
       this.ratingList=data;
     })
@@ -26,6 +26,9 @@ export class RatingComponent implements OnInit {
   
   sort(){
     
+  }
+  Search(){
+    this.getAllRatings(this.Title,this.RatingValue);
   }
 
 }
