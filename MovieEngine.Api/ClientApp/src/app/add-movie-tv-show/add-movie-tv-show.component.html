@@ -1,0 +1,22 @@
+<form [formGroup]="forma" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Title</label>
+        <input type="text" class="form-control" formControlName="Title">
+        <span style="color: red;" *ngIf="forma.get('Title').touched && forma.get('Title').hasError('required')">Obavezno polje</span>
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <input type="text" class="form-control" formControlName="Description">
+    </div>
+    <div class="form-group">
+        <label>Type</label>
+        <input type="text" class="form-control" formControlName="Type">
+        <span style="color: red;" *ngIf="forma.get('Type').touched && forma.get('Type').hasError('required')">Obavezno polje</span>
+    </div>
+    <div class="form-group">
+        <label>Release date</label>
+        <input type="date" class="form-control" formControlName="ReleaseDate">
+    </div>
+    <button style="text-align: center;" class="btn btn-primary" [disabled]="!forma.valid">Add new movie</button>
+<!-- <app-upload (onUploadFinished)="uploadFinished($event)" ></app-upload> -->
+</form>

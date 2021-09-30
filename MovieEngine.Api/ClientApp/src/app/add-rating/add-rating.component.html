@@ -1,0 +1,17 @@
+<form [formGroup]="forma" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Select movie or tv show</label>
+        <select class="form-control" formControlName="MovieAndTvShowID">
+            <!-- <option>Choose team</option> -->
+            <option *ngFor="let movieTvShow of movieTvShowList" [value]="movieTvShow.movieAndTvShowID">
+                {{movieTvShow.title}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Rating</label>
+        <input type="text" class="form-control" formControlName="RatingValue">
+        <span style="color: red;" *ngIf="forma.get('RatingValue').touched && forma.get('RatingValue').hasError('required')">Obavezno polje</span>
+    </div>
+    <button style="text-align: center;" class="btn btn-primary" [disabled]="!forma.valid">Add your rating</button>
+</form>

@@ -1,0 +1,22 @@
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <td>Movie name</td>
+            <td>Type</td>
+            <td>Release date</td>
+            <td>Description</td>
+            <td>Rating</td>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let rating of ratingList">
+            <td>{{rating.movieAndTvShow.title}}</td>
+            <td>{{rating.movieAndTvShow.type}}</td>
+            <td>{{rating.movieAndTvShow.releaseDate | date}}</td>
+            <td>{{rating.movieAndTvShow.description}}</td>
+            <td (click)="sort()">{{rating.ratingValue}} </td>
+        </tr>
+    </tbody>
+</table>
+<button routerLink="/addRating">Add your rating</button>

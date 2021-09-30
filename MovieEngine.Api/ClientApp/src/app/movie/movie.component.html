@@ -1,0 +1,28 @@
+<nav class="navbar">
+    <span>Filter</span>
+    <input class="form-control" type="text" name="Title" [(ngModel)]="Title" (change)="Search()" placeholder="Search by Movie title">
+    <input class="form-control" type="text" name="Type" [(ngModel)]="Type" (change)="Search()" placeholder="Search by type">
+</nav>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <td>Title</td>
+            <td>Description</td>
+            <td>Release Date</td>
+            <td>Type</td>
+            <td>Image</td>
+            <td>Add rating</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let movie of movieTvShowList | paginate : {itemsPerPage:3,currentPage:p}">
+            <td>{{movie.title}}</td>
+            <td>{{movie.description}}</td>
+            <td>{{movie.releaseDate | date}}</td>
+            <td>{{movie.type}}</td>
+            <td routerLink="/addRating">Add rating</td>
+        </tr>
+    </tbody>
+</table>
+<pagination-controls (pageChange)="p=$event"></pagination-controls>
+<button routerLink="/addMovie">Add new movie or tv show</button>
