@@ -1,14 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MovieEngine.Infrastructure.Context;
 using MovieEngine.Infrastructure.Mappers;
@@ -16,6 +19,7 @@ using MovieEngine.Infrastructure.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace MovieEngine.Api
 {
@@ -44,7 +48,12 @@ namespace MovieEngine.Api
                 x.UseSqlServer(Configuration.GetConnectionString("DB"));
                 x.LogTo(x => Debug.Print(x));
             });
-            services.AddControllersWithViews();
+
+            services.AddControllersWithViews()
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -54,6 +63,7 @@ namespace MovieEngine.Api
 
             services.AddScoped<IMovieAndTvShowService, MovieAndTvShowService>();
             services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -68,7 +78,56 @@ namespace MovieEngine.Api
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-                
+
+                services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+             .AddEntityFrameworkStores<MyContext>().
+             AddDefaultTokenProviders();
+
+                services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+           // jwt bearer
+           .AddJwtBearer(options =>
+           {
+               options.SaveToken = true;
+               options.RequireHttpsMetadata = false;
+               options.TokenValidationParameters = new TokenValidationParameters()
+               {
+                   ValidateIssuer = true,
+                   ValidateAudience = true,
+                   ValidAudience = Configuration["JWT:ValidAudience"],
+                   ValidIssuer = Configuration["JWT:ValidIssuer"],
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+               };
+           });
+
+                services.AddAuthentication();
+
+
+                services.Configure<IdentityOptions>(options =>
+                {
+                    options.Password = new PasswordOptions()
+                    {
+                        RequiredLength = 8,
+                        RequireLowercase = true,
+                        RequireDigit = true,
+                        RequireUppercase = true
+
+                    };
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedEmail = true;
+                });
+
+                services.Configure<PasswordHasherOptions>(x =>
+                {
+                    // za hashiranje passworda
+                    x.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3; // V3 -> SHA256, V2 -> SHA128
+                    x.IterationCount = 10000;
+                });
+
                 services.Configure<FormOptions>(o =>
                 {
                     o.ValueLengthLimit = int.MaxValue;
@@ -130,8 +189,9 @@ namespace MovieEngine.Api
             {
                 app.UseSpaStaticFiles();
             }
-
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

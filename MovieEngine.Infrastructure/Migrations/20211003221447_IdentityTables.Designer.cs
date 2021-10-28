@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieEngine.Infrastructure.Context;
 
 namespace MovieEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20211003221447_IdentityTables")]
+    partial class IdentityTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,19 +165,21 @@ namespace MovieEngine.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserLogins");
                 });
@@ -221,45 +225,19 @@ namespace MovieEngine.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeletedUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("ActorID");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("DeletedUserId");
-
-                    b.HasIndex("ModifiedUserId");
 
                     b.ToTable("Actor");
                 });
@@ -274,26 +252,8 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.Property<byte[]>("CoverImage")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeletedUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedUserId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PictureName")
                         .HasColumnType("nvarchar(max)");
@@ -305,19 +265,12 @@ namespace MovieEngine.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieAndTvShowID");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("DeletedUserId");
-
-                    b.HasIndex("ModifiedUserId");
 
                     b.ToTable("MovieAndTvShow");
                 });
@@ -332,31 +285,7 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.Property<int>("ActorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ActorID1")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeletedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedUserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MovieAndTvShowID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MovieAndTvShowID1")
                         .HasColumnType("int");
 
                     b.Property<string>("Role")
@@ -369,17 +298,7 @@ namespace MovieEngine.Infrastructure.Migrations
 
                     b.HasIndex("ActorID");
 
-                    b.HasIndex("ActorID1");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("DeletedUserId");
-
-                    b.HasIndex("ModifiedUserId");
-
                     b.HasIndex("MovieAndTvShowID");
-
-                    b.HasIndex("MovieAndTvShowID1");
 
                     b.ToTable("MovieAndTvShowActor");
                 });
@@ -391,26 +310,8 @@ namespace MovieEngine.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeletedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedUserId")
-                        .HasColumnType("int");
 
                     b.Property<int>("MovieAndTvShowId")
                         .HasColumnType("int");
@@ -420,64 +321,9 @@ namespace MovieEngine.Infrastructure.Migrations
 
                     b.HasKey("RatingID");
 
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("DeletedUserId");
-
-                    b.HasIndex("ModifiedUserId");
-
                     b.HasIndex("MovieAndTvShowId");
 
                     b.ToTable("Rating");
-                });
-
-            modelBuilder.Entity("MovieEngine.Database.User", b =>
-                {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeletedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("userID")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserID");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("DeletedUserId");
-
-                    b.HasIndex("ModifiedUserId");
-
-                    b.HasIndex("userID");
-
-                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -485,7 +331,7 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -494,7 +340,7 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -503,7 +349,7 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -512,13 +358,13 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -527,175 +373,38 @@ namespace MovieEngine.Infrastructure.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MovieEngine.Database.Actor", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "DeletedUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ModifiedUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedUser");
-
-                    b.Navigation("DeletedUser");
-
-                    b.Navigation("ModifiedUser");
-                });
-
-            modelBuilder.Entity("MovieEngine.Database.MovieAndTvShow", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "DeletedUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ModifiedUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedUser");
-
-                    b.Navigation("DeletedUser");
-
-                    b.Navigation("ModifiedUser");
                 });
 
             modelBuilder.Entity("MovieEngine.Database.MovieAndTvShowActor", b =>
                 {
                     b.HasOne("MovieEngine.Database.Actor", "Actor")
-                        .WithMany()
-                        .HasForeignKey("ActorID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MovieEngine.Database.Actor", null)
                         .WithMany("MovieAndTvShowActor")
-                        .HasForeignKey("ActorID1")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ActorID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "DeletedUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ModifiedUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MovieEngine.Database.MovieAndTvShow", "MovieAndTvShow")
-                        .WithMany()
+                        .WithMany("MovieAndTvShowActor")
                         .HasForeignKey("MovieAndTvShowID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieEngine.Database.MovieAndTvShow", null)
-                        .WithMany("MovieAndTvShowActor")
-                        .HasForeignKey("MovieAndTvShowID1")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Actor");
-
-                    b.Navigation("CreatedUser");
-
-                    b.Navigation("DeletedUser");
-
-                    b.Navigation("ModifiedUser");
 
                     b.Navigation("MovieAndTvShow");
                 });
 
             modelBuilder.Entity("MovieEngine.Database.Rating", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "DeletedUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ModifiedUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("MovieEngine.Database.MovieAndTvShow", "MovieAndTvShow")
                         .WithMany()
                         .HasForeignKey("MovieAndTvShowId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CreatedUser");
-
-                    b.Navigation("DeletedUser");
-
-                    b.Navigation("ModifiedUser");
 
                     b.Navigation("MovieAndTvShow");
-                });
-
-            modelBuilder.Entity("MovieEngine.Database.User", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "DeletedUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ModifiedUser")
-                        .WithMany()
-                        .HasForeignKey("ModifiedUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "user")
-                        .WithMany()
-                        .HasForeignKey("userID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedUser");
-
-                    b.Navigation("DeletedUser");
-
-                    b.Navigation("ModifiedUser");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("MovieEngine.Database.Actor", b =>

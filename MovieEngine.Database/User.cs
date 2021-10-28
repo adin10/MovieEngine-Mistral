@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace MovieEngine.Database
 {
-   public class Actor:IAuditable
+   public class User:IAuditable
     {
-        public int ActorID { get; set; }
+        public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
-
-        public ICollection<MovieAndTvShowActor> MovieAndTvShowActor { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int CreatedUserId { get; set; }
-        public IdentityUser<int> CreatedUser { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public int userID { get; set; }
+        public IdentityUser<int> user { get; set; }
+        public DateTime CreatedDate { get;set; }
+        public int CreatedUserId { get ; set; }
+        public IdentityUser<int> CreatedUser { get;set; }
+        public DateTime? ModifiedDate { get; set; } 
         public int? ModifiedUserId { get; set; }
         public IdentityUser<int> ModifiedUser { get; set; }
         public DateTime? DeletedDate { get; set; }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieEngine.Infrastructure.Requests
 {
-   public class MovieAndTvShowUpdateRequest
+   public class LoginModel
     {
-
+        public string username { get; set; }
+        public string password { get; set; }
     }
 }

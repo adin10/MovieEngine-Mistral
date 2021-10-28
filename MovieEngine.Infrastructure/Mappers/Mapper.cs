@@ -22,6 +22,9 @@ namespace MovieEngine.Infrastructure.Mappers
             CreateMap<RatingInsertRequest, Rating>();
 
             CreateMap<RatingRestUpsertModel, RatingInsertRequest>().ReverseMap();
+            CreateMap<MovieAndTvShowRestUpsertRequest, MovieAndTvShowInsertRequest>().ReverseMap();
+
+            CreateMap<User, UserResponse>().ReverseMap();
         }
     }
 }

@@ -8,6 +8,7 @@ using MovieEngine.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MovieEngine.Api.Controllers
@@ -34,9 +35,12 @@ namespace MovieEngine.Api.Controllers
             return Ok(await _service.getById(id));
         }
         [HttpPost]
-        public async Task<ActionResult<MovieAndTvShow>> Insert(MovieAndTvShowInsertRequest request)
+        public async Task<ActionResult<MovieAndTvShow>> Insert(MovieAndTvShowRestUpsertRequest request)
         {
-            return Ok(await _service.Insert(request));
+            var insertRequest = _mapper.Map<MovieAndTvShowInsertRequest>(request);
+            insertRequest.CreatedUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            insertRequest.CreatedDate = DateTime.Now;
+            return Ok(await _service.Insert(insertRequest));
         }
 
          

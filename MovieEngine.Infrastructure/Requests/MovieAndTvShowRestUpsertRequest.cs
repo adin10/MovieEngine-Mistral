@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieEngine.Infrastructure.Requests
 {
-   public class MovieAndTvShowInsertRequest
+   public class MovieAndTvShowRestUpsertRequest
     {
         [Required]
         public string Title { get; set; }
@@ -16,9 +16,5 @@ namespace MovieEngine.Infrastructure.Requests
         public DateTime ReleaseDate { get; set; }
         public string PictureName { get; set; }
         public string PicturePath { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int CreatedUserId { get; set; }
-        //public byte[] CoverImage { get; set; }
-
     }
 }
